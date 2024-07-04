@@ -15,10 +15,10 @@ public class Debouncer implements OnDebounceListener{
 
     private final MainViewModel viewModel;
     private final OnDebounceListener listener;
-    public Debouncer(MainViewModel viewModel, OnDebounceListener listener) {
-        this.viewModel = viewModel;
-        final Debouncer debouncer = new Debouncer(viewModel, this);
+    public Debouncer(OnDebounceListener listener) {
+        final Debouncer debouncer = new Debouncer(this);
         this.listener = listener;
+
     }
 
     private final Handler handler = new Handler(Looper.getMainLooper()) {

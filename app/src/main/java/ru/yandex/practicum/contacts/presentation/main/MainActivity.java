@@ -7,6 +7,7 @@ import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.badge.BadgeUtils;
@@ -30,6 +31,7 @@ import ru.yandex.practicum.contacts.utils.android.OnDebounceListener;
 import ru.yandex.practicum.contacts.utils.widget.EditTextUtils;
 
 import androidx.annotation.IdRes;
+import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
@@ -89,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements OnDebounceListene
     }
 
     public void bindSearch() {
-        final Debouncer debouncer = new Debouncer(viewModel, this);
+        final Debouncer debouncer = new Debouncer(this);
         binding.searchLayout.searchText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
