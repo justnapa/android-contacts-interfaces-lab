@@ -30,6 +30,7 @@ public class FilterContactTypeAdapter extends RecyclerView.Adapter<FilterContact
             new AsyncDifferConfig.Builder<>(new BaseListDiffCallBack<FilterContactTypeUi>()).build()
     );
 
+    
     private final Consumer<FilterContactTypeUi> clickListener;
 
     public FilterContactTypeAdapter(Consumer<FilterContactTypeUi> clickListener) {
