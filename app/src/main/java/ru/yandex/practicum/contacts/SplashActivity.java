@@ -1,3 +1,4 @@
+//from project 1
 package ru.yandex.practicum.contacts;
 
 import android.Manifest;
@@ -47,6 +48,9 @@ public class SplashActivity extends AppCompatActivity {
         super.onStart();
         if (ContextUtils.hasContactPermissions(this)) {
             navigateToMain();
+        }
+        else {
+            requestPermissionLauncher.launch(Manifest.permission.READ_CONTACTS);
         }
     }
 

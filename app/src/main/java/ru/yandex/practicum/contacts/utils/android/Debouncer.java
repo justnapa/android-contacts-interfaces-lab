@@ -8,17 +8,15 @@ import ru.yandex.practicum.contacts.presentation.main.MainViewModel;
 
 import androidx.annotation.NonNull;
 
-public class Debouncer implements OnDebounceListener{
+public class Debouncer {
 
     private static final int MESSAGE_ID = 1;
     private static final int DELAY = 500;
 
     private final MainViewModel viewModel;
-    private final OnDebounceListener listener;
-    public Debouncer(MainViewModel viewModel, OnDebounceListener listener) {
+
+    public Debouncer(MainViewModel viewModel) {
         this.viewModel = viewModel;
-        final Debouncer debouncer = new Debouncer(viewModel, this);
-        this.listener = listener;
     }
 
     private final Handler handler = new Handler(Looper.getMainLooper()) {
@@ -41,11 +39,6 @@ public class Debouncer implements OnDebounceListener{
 
     // выполнить действие по прошествии 500мс, если нового события в течении 500мс не было отправлено
     private void doOnDebounce() {
-        listener.onDebounce();
-    }
-
-    @Override
-    public void onDebounce() {
         viewModel.search();
     }
 }

@@ -1,3 +1,4 @@
+
 package ru.yandex.practicum.contacts.presentation.main;
 
 import android.annotation.SuppressLint;
@@ -7,6 +8,7 @@ import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.badge.BadgeUtils;
@@ -26,16 +28,16 @@ import ru.yandex.practicum.contacts.presentation.sort.SortDialogFragment;
 import ru.yandex.practicum.contacts.presentation.sort.model.SortType;
 import ru.yandex.practicum.contacts.ui.widget.DividerItemDecoration;
 import ru.yandex.practicum.contacts.utils.android.Debouncer;
-import ru.yandex.practicum.contacts.utils.android.OnDebounceListener;
 import ru.yandex.practicum.contacts.utils.widget.EditTextUtils;
 
 import androidx.annotation.IdRes;
+import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 
 @SuppressLint("UnsafeExperimentalUsageError")
-public class MainActivity extends AppCompatActivity implements OnDebounceListener {
+public class MainActivity extends AppCompatActivity {
 
     public static final String SORT_TAG = "SORT_TAG";
     public static final String FILTER_TAG = "FILTER_TAG";
@@ -70,13 +72,8 @@ public class MainActivity extends AppCompatActivity implements OnDebounceListene
         bindSearch();
         EditTextUtils.addTextListener(binding.searchLayout.searchText, query -> viewModel.updateSearchText(query.toString()));
 
-        //binding.searchLayout.resetButton.setOnClickListener(view -> clearSearch());
-        binding.searchLayout.resetButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                clearSearch();
-            }
-        });
+        binding.searchLayout.resetButton.setOnClickListener(view -> clearSearch());
+
         getSupportFragmentManager().setFragmentResultListener(SortDialogFragment.REQUEST_KEY, this, (requestKey, result) -> {
             final SortType newSortType = SortDialogFragment.from(result);
             viewModel.updateSortType(newSortType);
@@ -89,7 +86,7 @@ public class MainActivity extends AppCompatActivity implements OnDebounceListene
     }
 
     public void bindSearch() {
-        final Debouncer debouncer = new Debouncer(viewModel, this);
+        final Debouncer debouncer = new Debouncer(viewModel);
         binding.searchLayout.searchText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -215,11 +212,6 @@ public class MainActivity extends AppCompatActivity implements OnDebounceListene
 
     private void clearSearch() {
         binding.searchLayout.searchText.setText("");
-        viewModel.search();
-    }
-
-    @Override
-    public void onDebounce() {
         viewModel.search();
     }
 }
