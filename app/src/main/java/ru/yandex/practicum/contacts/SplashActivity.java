@@ -49,6 +49,9 @@ public class SplashActivity extends AppCompatActivity {
         if (ContextUtils.hasContactPermissions(this)) {
             navigateToMain();
         }
+        else {
+            requestPermissionLauncher.launch(Manifest.permission.READ_CONTACTS);
+        }
     }
 
     private void navigateToMain() {
